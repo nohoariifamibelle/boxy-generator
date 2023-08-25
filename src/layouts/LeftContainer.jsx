@@ -1,0 +1,35 @@
+import ShadowList from "./ShadowList/ShadowList"
+import BoxPanel from "./BoxPanel/BoxPanel"
+import { useState } from "react"
+
+function LeftContainer() {
+    //Système d'onglets
+    /*
+    On va faire changer le state tabs entre 0 et 1 pour correspondre au tableau tabsList permettant donc de récupérer le nom et le composant de l'onglet dans lequel on est.
+    Puis on affiche le composant active.
+    */
+    const [tabs, setTabs] = useState(0)
+
+    const tabsList = [
+        {name: "Shadow", component: <ShadowList />},
+        {name: "BoxPanel", component: <BoxPanel />}
+    ]
+    return (
+        <div className="relative mt-20 w-[600px] h-[550px] border rounded-b rounded-tr border-gray-300 shadow-sl bg-gray-50 md:mt-0">
+            <div className="flex absolute -translate-y-full -left-[1px]">
+                {tabsList.map((tab, index) => (
+                    <button 
+                    onClick={() => setTabs(index)} 
+                    key={index} 
+                    className="min-w-[125px] py-2 px-3 mr-4 font-bold border-t border-x border-gray-300 bg-slate-50 hover:bg-slate-200 text-slice-700 rounded-t focus:outline-none focus:ring-2 ring-inset focus:ring-blue-300 ">
+                        {tab.name}
+                    </button>
+                ))}
+            </div>
+            <div className="h-full overflow-auto">
+                {tabsList[tabs].component}
+            </div>
+        </div>
+    )
+}
+export default LeftContainer
